@@ -3,6 +3,23 @@ import { createClient } from '@/lib/supabase/server';
 
 export async function POST(request: NextRequest) {
   try {
+    // Verify environment variables first
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+      console.error('NEXT_PUBLIC_SUPABASE_URL is not set');
+      return NextResponse.json(
+        { error: 'Server configuration error: Missing Supabase URL' },
+        { status: 500 }
+      );
+    }
+
+    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      console.error('SUPABASE_SERVICE_ROLE_KEY is not set');
+      return NextResponse.json(
+        { error: 'Server configuration error: Missing Supabase service key' },
+        { status: 500 }
+      );
+    }
+
     const body = await request.json();
     const { name } = body;
 
