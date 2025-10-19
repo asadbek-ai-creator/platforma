@@ -52,20 +52,6 @@ export async function POST(request: NextRequest) {
     const supabase = createClient();
     console.log('Supabase client created successfully');
 
-    // Test connection first
-    const { error: connectionError } = await supabase.from('users').select('count').limit(1);
-    if (connectionError) {
-      console.error('Supabase connection error:', connectionError);
-      return NextResponse.json(
-        {
-          error: 'Database connection failed',
-          details: connectionError.message,
-          code: connectionError.code
-        },
-        { status: 500 }
-      );
-    }
-
     // Check if user already exists
     console.log('Checking if user exists:', name);
     const { data: existingUser, error: checkError } = await supabase
