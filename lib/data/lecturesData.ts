@@ -3113,7 +3113,7 @@ export const lecturesData = [
  * @param {string} lectureId - The ID of the lecture
  * @returns {Object|null} - The lecture object or null if not found
  */
-export const getLectureById = (lectureId) => {
+export const getLectureById = (lectureId: string) => {
   return lecturesData.find(lecture => lecture.id === lectureId) || null;
 };
 
@@ -3135,9 +3135,9 @@ export const getLectureTitles = () => {
  * @param {string} componentType - The component type (visual, audio, kinesthetic, reading, digital)
  * @returns {Array} - Array of lectures containing the specified component
  */
-export const getLecturesByComponent = (componentType) => {
+export const getLecturesByComponent = (componentType: string) => {
   return lecturesData.filter(lecture =>
-    lecture.recommendedComponents.includes(componentType)
+    lecture.recommendedComponents?.includes(componentType) ?? false
   );
 };
 
@@ -3147,9 +3147,9 @@ export const getLecturesByComponent = (componentType) => {
  * @param {string} componentType - The component type
  * @returns {Array} - Array of sections matching the component type
  */
-export const getLectureSectionsByType = (lectureId, componentType) => {
+export const getLectureSectionsByType = (lectureId: string, componentType: string) => {
   const lecture = getLectureById(lectureId);
   if (!lecture) return [];
 
-  return lecture.sections.filter(section => section.componentType === componentType);
+  return lecture.sections.filter((section: any) => section.componentType === componentType);
 };

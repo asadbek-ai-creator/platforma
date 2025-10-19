@@ -187,6 +187,6 @@ export const presetTopics = {
   },
 };
 
-export const getPresetTopicData = (topicKey) => {
-  return presetTopics[topicKey] || null;
+export const getPresetTopicData = (topicKey: string) => {
+  return presetTopics[topicKey as keyof typeof presetTopics] || null;
 };
