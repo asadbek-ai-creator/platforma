@@ -45,8 +45,26 @@ export async function POST(request: NextRequest) {
     }
 
     console.log('Validation passed. Creating Supabase client...');
+    console.log('Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
+    console.log('Has Service Key:', !!process.env.SUPABASE_SERVICE_ROLE_KEY);
+    console.log('Service Key length:', process.env.SUPABASE_SERVICE_ROLE_KEY?.length);
+
     const supabase = createClient();
     console.log('Supabase client created successfully');
+
+    // Test connection first
+    const { error: connectionError } = await supabase.from('users').select('count').limit(1);
+    if (connectionError) {
+      console.error('Supabase connection error:', connectionError);
+      return NextResponse.json(
+        {
+          error: 'Database connection failed',
+          details: connectionError.message,
+          code: connectionError.code
+        },
+        { status: 500 }
+      );
+    }
 
     // Check if user already exists
     console.log('Checking if user exists:', name);
