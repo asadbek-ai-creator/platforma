@@ -37,3 +37,6 @@ next-env.d.ts
 # prisma
 /prisma/migrations
 /generated
+
+# old vite project (data migrated to Next.js)
+/student
